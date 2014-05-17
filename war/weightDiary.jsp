@@ -36,7 +36,10 @@
 	<!-- 独自実装JavaScript -->
 	<script type="text/javascript">
 	$(function(){
-		function createTableData(tableTBodyObject, tableData) {
+		// データからtableを作成する
+		// tableTBodyObject データを表示する表のボディのオブジェクト
+		// tableData 表示するデータ
+		function createTableData(tableData, tableTBodyObject) {
 			tableTBodyObject.empty();
 			var tbody_html = "";
 			for(var i = 0; i < tableData.length; i = i+1) {
@@ -49,34 +52,53 @@
 			tableTBodyObject.html(tbody_html);
 		}
 		
-		
+		// サンプルデータ
 		var json_data = [
 			{"date": "2014/04/01", "weight": 70, "percentOfBody": 24.5},
-			{"date": "2014/04/02", "weight": 70, "percentOfBody": 24.5},
-			{"date": "2014/04/03", "weight": 70, "percentOfBody": 24.5},
-			{"date": "2014/04/04", "weight": 70, "percentOfBody": 24.5},
+			{"date": "2014/04/02", "weight": 71, "percentOfBody": 25.5},
+			{"date": "2014/04/03", "weight": 72, "percentOfBody": 26.5},
+			{"date": "2014/04/04", "weight": 73, "percentOfBody": 27.5},
 		];
 		
-		createTableData($('#weight_table tbody'), json_data);
+		// 取得したデータの表を作成
+		createTableData(json_data, $('#weight_table tbody'));
+
+		// 表のデータをグラフ表示用に変換
+		// 体重
+		var array_dairy_weight = [];
+		for(var i = 0; i < json_data.length; ++i) {
+			var dairy_weight = [];
+			dairy_weight.push(json_data[i].date);
+			dairy_weight.push(json_data[i].weight);
+			
+			array_dairy_weight.push(dairy_weight);
+		}
+		var obj_dairy_weight = {};
+		obj_dairy_weight["name"] = "体重";
+		obj_dairy_weight["data"] = array_dairy_weight;
+
+		// 体脂肪率
+		var array_dairy_percent = [];
+		for(var j = 0; j < json_data.length; ++j) {
+			var dairy_percent = [];
+			dairy_percent.push(json_data[j].date);
+			dairy_percent.push(json_data[j].percentOfBody);
+			
+			array_dairy_percent.push(dairy_percent);
+		}
+		var obj_dairy_percent = {};
+		obj_dairy_percent["name"] = "体脂肪率";
+		obj_dairy_percent["data"] = array_dairy_percent;
 		
-		var json_graph_data = [
-			{"name":"体重", "data": {
-				"2014/04/01": 70,
-				"2014/04/02": 70,
-				"2014/04/03": 70,
-				"2014/04/05": 70,}
-			},
-			{"name":"体脂肪率", "data": {
-				"2014/04/01": 24.5,
-				"2014/04/02": 24.5,
-				"2014/04/03": 24.5,
-				"2014/04/05": 24.5,}
-			},
-		];
-		new Chartkick.LineChart('chart-2', json_graph_data);
+		// グラフ表示用Object作成
+		var json_graph_data = [];
+		json_graph_data.push(obj_dairy_weight);
+		json_graph_data.push(obj_dairy_percent);
+		
+		// グラフを描画
+		new Chartkick.LineChart('weight_chart', json_graph_data);
 		
 		$("#datepicker").datepicker();
-
 		
 		
 	});
@@ -91,7 +113,7 @@
 </div>
 
 <div id = "contents">
-	<div id="chart-2"></div>
+	<div id="weight_chart"></div>
 	<table id = "weight_table">
 		<thead>
 			<tr>
