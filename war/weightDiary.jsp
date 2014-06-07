@@ -65,35 +65,35 @@
 
 		// 表のデータをグラフ表示用に変換
 		// 体重
-		var array_dairy_weight = [];
+		var array_daily_weight = [];
 		for(var i = 0; i < json_data.length; ++i) {
-			var dairy_weight = [];
-			dairy_weight.push(json_data[i].date);
-			dairy_weight.push(json_data[i].weight);
+			var daily_weight = [];
+			daily_weight.push(json_data[i].date);
+			daily_weight.push(json_data[i].weight);
 			
-			array_dairy_weight.push(dairy_weight);
+			array_daily_weight.push(daily_weight);
 		}
-		var obj_dairy_weight = {};
-		obj_dairy_weight["name"] = "体重";
-		obj_dairy_weight["data"] = array_dairy_weight;
+		var obj_daily_weight = {};
+		obj_daily_weight["name"] = "体重";
+		obj_daily_weight["data"] = array_daily_weight;
 
 		// 体脂肪率
-		var array_dairy_percent = [];
+		var array_daily_percent = [];
 		for(var j = 0; j < json_data.length; ++j) {
-			var dairy_percent = [];
-			dairy_percent.push(json_data[j].date);
-			dairy_percent.push(json_data[j].percentOfBody);
+			var daily_percent = [];
+			daily_percent.push(json_data[j].date);
+			daily_percent.push(json_data[j].percentOfBody);
 			
-			array_dairy_percent.push(dairy_percent);
+			array_daily_percent.push(daily_percent);
 		}
-		var obj_dairy_percent = {};
-		obj_dairy_percent["name"] = "体脂肪率";
-		obj_dairy_percent["data"] = array_dairy_percent;
+		var obj_daily_percent = {};
+		obj_daily_percent["name"] = "体脂肪率";
+		obj_daily_percent["data"] = array_daily_percent;
 		
 		// グラフ表示用Object作成
 		var json_graph_data = [];
-		json_graph_data.push(obj_dairy_weight);
-		json_graph_data.push(obj_dairy_percent);
+		json_graph_data.push(obj_daily_weight);
+		json_graph_data.push(obj_daily_percent);
 		
 		// グラフを描画
 		new Chartkick.LineChart('weight_chart', json_graph_data);
